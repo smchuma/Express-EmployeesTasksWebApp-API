@@ -94,19 +94,19 @@ const deleteUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "User id required" });
   }
 
-  const tasks = await Task.findOne({ user: id }).lean().exec();
+  const task = await Task.findOne({ user: id }).lean().exec();
 
-  if (tasks?.length) {
+  if (task) {
     return res.status(400).json({ message: "User has assigned Tasks" });
   }
 
   const user = await User.findById(id).exec();
 
   if (!user) {
-    return res.status(400).json({ message: "User not found" });
+    return res.status(404).json({ message: "User not found" });
   }
 
-  const result = await User.deleteOne();
+  const result = await user.deleteOne();
   const reply = `Username ${result.username} with ID ${result._id} deleted`;
   res.json(reply);
 });

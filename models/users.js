@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema({
       default: "Employee",
     },
   ],
-  // active: {
-  //   type: Boolean,
-  //   required: true,
-  // },
+  active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
